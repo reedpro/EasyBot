@@ -6,6 +6,7 @@ from keep_alive import keep_alive
 
 webhook = os.getenv('WEBHOOK')
 url = os.getenv('URL')
+searchTerm = os.getenv('SEARCHTERM')
 
 
 data = {
@@ -32,7 +33,7 @@ def pingDiscord():
 def checkDoctor():
 	html = requests.get(url).content
 	soup = BeautifulSoup(html, features="html5lib")
-	if "We are not accepting new patients at this time." not in soup.prettify():
+	if searchTerm not in soup.prettify():
 		pingDiscord()
 
 keep_alive()
